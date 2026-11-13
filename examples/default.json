@@ -1,0 +1,22 @@
+{
+  "n": 2,
+  "spacing_deg": 90.0,
+  "center_mm": 300.0,
+  "input_radius_mm": 60.0,
+  "output_radius_mm": 60.0,
+  "rod_mm": 300.0,
+  "shank_mm": 340.0,
+  "clocking_deg": 120.0,
+  "q_start_deg": -120.0,
+  "q_end_deg": -15.0,
+  "half_cycle_s": 2.0,
+  "mass_kg": 80.0,
+  "share": 0.5,
+  "load_mode": "constant",
+  "load_factor": 1.0,
+  "stiffness_n_mm": 10000.0,
+  "k2_ratio": 1.0,
+  "k3_ratio": 1.0,
+  "branch": "open",
+  "samples": 241
+}

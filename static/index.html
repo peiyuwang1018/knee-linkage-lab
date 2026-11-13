@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Knee Linkage Lab</title><link rel="stylesheet" href="/style.css"></head>
+<body class="lab-app">
+<header><strong>Knee Linkage Lab</strong><span class="version">0.6 · Planar statics</span><nav><button id="showParameters" aria-expanded="false" aria-controls="properties">Parameters</button><button id="modelTab" class="active">Model</button><button id="scanTab">Scan</button><a href="/guide.html" target="_blank">Guide ↗</a></nav><div class="toolbar"><button id="loadConfig">Open…</button><input type="file" id="configFile" accept=".json" hidden><button id="saveConfig">Save config</button><button id="exportCsv">Export CSV</button><button id="exportSvg">Export SVG</button></div></header>
+<div id="notice" role="alert" hidden></div>
+<main id="modelView">
+<button id="parameterBackdrop" aria-label="Close parameters" tabindex="-1" hidden></button>
+<aside id="properties">
+<div class="panel-title">Parameters <button id="reset" title="Restore example parameters">Reset</button></div>
+<div class="preset-row"><select id="preset" aria-label="Example"><option value="custom">Examples…</option><option value="default">Two rods · squat / stand</option><option value="three">Three rods · 60° spacing</option><option value="reverse">Knee reversal · geometry study</option><option value="single">Single rod · four-bar</option></select></div>
+<details open><summary>Geometry</summary><div id="geometryFields" class="fields"></div><p id="geometryHint" class="hint"></p></details>
+<details open><summary>Motion</summary><div id="motionFields" class="fields"></div><p class="hint">Margin: minimum crank-to-rod angle at either pin (single rod only).</p></details>
+<details open><summary>Load</summary><div id="loadFields" class="fields"></div><p class="hint">Total mass includes payload. Foot fixed; hip moves above it.</p></details>
+<details><summary>Load sharing</summary><div id="stiffnessFields" class="fields"></div><p class="hint">Small axial compliance; no preload or clearance. N &gt; 0 means tension.</p></details>
+<details><summary>Numerics</summary><div id="numericFields" class="fields"></div></details>
+</aside>
+<section class="workspace">
+<section class="mechanism-pane" aria-label="Mechanism workspace">
+<div class="canvas-heading"><div id="colorModeSwitch" class="mode-switch color-switch" role="radiogroup" aria-label="Color mode"><button type="button" role="radio" data-value="muted">Color</button><button type="button" role="radio" data-value="mono">Mono</button></div><select id="colorMode" aria-label="Color mode" hidden><option value="muted">Muted color</option><option value="mono">Monochrome</option></select><label><input id="dimensions" type="checkbox" checked>Dimensions</label><label><input id="grid" type="checkbox" checked>Grid</label><button id="showValues" aria-expanded="false" aria-controls="readoutsPanel" title="More joint and support values">Details</button><button id="fit">Fit</button></div>
+<div id="motionRange" class="motion-range" hidden></div><div class="canvas-row"><div id="drawing"><svg id="mechanism" viewBox="0 0 760 460" role="img" aria-label="Planar knee linkage and fixed foot"></svg></div></div>
+<div id="rodSelector" class="rod-selector" role="group" aria-label="Rod force overlays"></div><div class="transport"><button id="play" aria-label="Play cycle">▶</button><input id="frame" type="range" min="0" max="240" value="0" aria-label="Cycle frame"><output id="time">0.00 s</output><select id="playSpeed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div>
+</section>
+<section class="analysis-pane" aria-label="Force analysis">
+<div class="plot-heading"><select id="plotType" aria-label="Plot variable"><option value="forces">Rod axial forces · N</option><option value="torque">Input / knee torque · N·m</option><option value="reaction">Support resultants · N</option><option value="grf">Ground reaction · N</option><option value="speed">Input speed · rad/s</option><option value="height">Hip height · mm</option><option value="angle">Knee angle · deg</option></select><output id="cursorMeta" aria-label="Plot cursor"></output><div id="legend" aria-label="Current curve values"></div></div>
+<svg id="chart" viewBox="0 0 1040 230" role="img" aria-label="Cycle plot. Click or drag to inspect; arrow keys step through samples." tabindex="0"></svg>
+<div class="plot-help">Click or drag the plot to inspect · ← → step through samples</div>
+<section class="force-ranges" aria-label="Rod force ranges"><div class="range-heading"><strong>Force ranges · N</strong><span id="rangeScope"></span></div><table id="forceRanges"><thead><tr><th rowspan="2" scope="col">Rod</th><th colspan="2" scope="colgroup">Tension (+)</th><th colspan="2" scope="colgroup">Compression (−)</th></tr><tr><th scope="col">Min +</th><th scope="col">Max +</th><th scope="col" title="Most negative: strongest compression">Min −</th><th scope="col" title="Least negative: closest to zero">Max −</th></tr></thead><tbody></tbody></table><p class="range-note">Click a value to jump · Min − = strongest compression<br>Nonzero sampled forces; — = no samples of that sign.</p></section>
+<details id="readoutsPanel"><summary>Joint &amp; support details</summary><div id="readouts"><section class="detail-block"><div class="panel-title">Current frame</div><dl id="instant"></dl><table class="rod-table"><thead><tr><th>Rod</th><th>Axial force</th><th>State</th></tr></thead><tbody id="rodTable"></tbody></table></section><section class="detail-block"><div class="panel-title">Cycle peaks</div><dl id="peaks"></dl><details id="checks"><summary>Model checks</summary><div id="warnings"></div></details></section></div></details>
+</section>
+<footer id="status">Starting Python solver…</footer>
+</section></main>
+<main id="scanView" hidden>
+<aside class="scan-controls"><div class="panel-title">Parameter grid</div><p class="hint">Comma-separated values. All candidates use compatible parallelograms.</p><div id="scanFields" class="fields"></div><div class="panel-title">Screening limits</div><p class="hint">Zero disables a limit. These are user limits, not verified component ratings.</p><div id="limitFields" class="fields"></div><button id="runScan" class="primary">Run scan</button><button id="scanExport" disabled>Export results</button></aside>
+<section class="scan-results"><div class="panel-title">Candidates <span id="scanStatus">No scan yet</span></div><p class="hint">Ranked by peak rod load. “Pareto” compares rod load and crank radius only. A larger crank reduces rod force but does not increase torque in a 1:1 parallelogram.</p><div id="scanSummary"></div><div class="table-wrap"><table id="scanTable"><thead><tr><th>#</th><th>n</th><th>r [mm]</th><th>α [°]</th><th>d [mm]</th><th>s [mm]</th><th>δ [°]</th><th>Rod peak [N]</th><th>Input [N·m]</th><th>Knee support [N]</th><th>Front</th><th></th></tr></thead><tbody></tbody></table></div></section>
+</main><script src="/app.js"></script></body></html>
