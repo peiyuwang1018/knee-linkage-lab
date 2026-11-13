@@ -27,7 +27,7 @@
 /docs/*
 !/docs/Model.md
 !/docs/Initial-findings.en.md
-!/docs/workbench.jpg
+!/docs/workbench.png
 
 __pycache__/
 *.py[cod]

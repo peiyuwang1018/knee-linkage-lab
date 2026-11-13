@@ -4,7 +4,7 @@ A local, interactive Python workbench for exploring planar knee transmissions wi
 
 Prepared by Peiyu Wang. UI v0.6; analytical solver v0.4.0.
 
-![Knee Linkage Lab: geometry, force overlays and cycle plots](docs/workbench.jpg)
+![Knee Linkage Lab: geometry, force overlays and cycle plots](docs/workbench.png)
 
 ## What it helps answer
 
