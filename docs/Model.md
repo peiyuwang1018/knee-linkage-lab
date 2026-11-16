@@ -91,3 +91,11 @@ The included tests cover force and moment balance, virtual work, known load dist
 No physical experiment or independent multibody solver has validated these predictions. Three-dimensional geometry, collisions, buckling, pin bending, bearing pairs, friction, backlash, preload, component masses, thermal limits and whole-robot balance require additional models or measurements.
 
 Implementation: `kneelab/model.py` contains geometry, loading and cycle calculations; `scan.py` handles finite-grid screening; `statistics.py` handles signed extrema; `export.py` writes CSV. `server.py` serves the local interface, and `static/app.js` renders controls and plots.
+
+## Display analysis and chain module (v0.9)
+
+One-way and round-trip plots share the same full-cycle calculations. The one-way cursor retraces on return. The optional linkage torque overlay compares the input-disc requirement against rated module torque times extra reduction and assumed efficiency. Coverage measures the requested knee-angle range, requires both directions, and retains invalid angles in the denominator. It is not a thermal, speed or strength check.
+
+The independent Chain module adds catalog dimensions, integer tooth selection, a fixed ratio range of 1 to a user maximum no greater than 2, and even chain-link ranges. Single or mirrored outside idlers press inward. A tangent-and-arc route solver searches longitudinal positions and inward travel, then reports chain tensions and individual wheel-axis resultants. See the [Chain guide](../static/chain-guide.html) for assumptions, formulas and manufacturer sources.
+
+Chain forces use a mean-radius model with prescribed slack tension. Discrete tooth engagement, spring tensioner dynamics and wear life are outside scope. Current screening does not enforce the manufacturer's suggested minimum idler tooth engagement or free-span length. A passing route is only a preliminary candidate.

@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 from kneelab.model import Config,cycle
 from kneelab.scan import DEFAULT_GRID,DEFAULT_LIMITS,scan
 from kneelab.export import cycle_csv,scan_csv
+from kneelab import chain
 
 ROOT=Path(__file__).resolve().parent
 
@@ -34,11 +35,13 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if not self.trusted():return self.reply(403,{"error":"Local requests only."})
         path=urlparse(self.path).path
-        if path=="/api/health":return self.reply(200,{"app":"knee-linkage-lab","version":"0.4.0"})
+        if path=="/api/health":return self.reply(200,{"app":"knee-linkage-lab","version":"0.9.0"})
+        if path=="/api/chain/defaults":
+            return self.reply(200,dict(config=chain.ChainConfig().to_dict(),catalog=chain.CATALOG))
         if path=="/api/defaults":
             return self.reply(200,dict(config=Config().to_dict(),grid=DEFAULT_GRID,limits=DEFAULT_LIMITS))
         if path in ("/","/index.html"):file=ROOT/"static/index.html"
-        elif path in ("/app.js","/style.css","/guide.html"):file=ROOT/"static"/path[1:]
+        elif path in ("/app.js","/analysis.js","/style.css","/guide.html","/chain.html","/chain.js","/chain.css","/chain-guide.html"):file=ROOT/"static"/path[1:]
         elif path in ("/model.md", "/findings.md", "/readme.md"):
             names = {"/model.md": "docs/Model.md", "/findings.md": "docs/Initial-findings.en.md",
                      "/readme.md": "README.md"}
@@ -53,8 +56,14 @@ class Handler(BaseHTTPRequestHandler):
             size=int(self.headers.get("Content-Length","0"))
             if not 0<size<=1000000:raise ValueError("Invalid request size.")
             data=json.loads(self.rfile.read(size))
+            if not isinstance(data,dict):raise ValueError("Request body must be an object.")
             path=urlparse(self.path).path
-            if path in ("/api/cycle","/api/cycle.csv"):
+            if path in ("/api/chain/cycle","/api/chain/cycle.csv"):
+                result=chain.evaluate(data.get("config",{}))
+                if path.endswith(".csv"):return self.reply(200,chain.cycle_csv(result),"text/csv; charset=utf-8","chain-cycle.csv")
+            elif path=="/api/chain/scan":
+                result=chain.scan(data.get("config",{}),data.get("chain_ids"))
+            elif path in ("/api/cycle","/api/cycle.csv"):
                 result=cycle(data.get("config",{}))
                 if path.endswith(".csv"):return self.reply(200,cycle_csv(result),"text/csv; charset=utf-8","cycle.csv")
             elif path in ("/api/scan","/api/scan.csv"):

@@ -1,0 +1,35 @@
+.chain-app{--sidebar-width:260px}
+.chain-app .field{grid-template-columns:minmax(0,1fr) 66px 29px}
+.chain-app .field input:invalid{border-color:#b46f4d;background:#fff9f4}
+.chain-app .preset-row select{font-size:12px}.preset-row #importTask{margin-top:7px;width:100%;font-size:11px}
+.chain-workspace{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:auto;background:#fff}
+.chain-mechanism{display:flex;flex-direction:column;min-width:0;min-height:380px;height:56dvh;flex:none}
+.chain-mechanism #drawing{min-height:230px}.chain-mechanism svg{width:100%;height:100%;display:block}
+.geometry-summary{display:flex;flex:none;flex-wrap:wrap;gap:5px 16px;padding:9px 12px 3px;color:#555;font-size:11px;font-variant-numeric:tabular-nums}
+.geometry-summary b{color:#273f4d;font-weight:600}.mechanism-note{font-size:10px;color:#777;padding:5px 12px;flex:none}
+.chain-analysis{min-width:0;display:flex;flex-direction:column;background:white;flex:none}
+.chain-app #chart{height:270px;min-height:200px;flex:none}
+.chain-app .mode-switch button{position:relative;background:none;border:0;min-height:23px;font-size:10px;padding:2px 8px;color:#5e6870}
+.chain-app .mode-switch button[aria-pressed=true]{color:#253d4b;font-weight:600}
+.fit-row{display:flex;align-items:center;gap:8px;margin:3px 10px;font-size:10px;color:#666}.fit-row button{font-size:10px;white-space:nowrap}
+.quick-ratios{display:flex;gap:5px;align-items:center;padding:0 10px 5px;font-size:10px;color:#666}.quick-ratios button{min-height:22px;font-size:10px}
+.inline-button{margin:4px 10px;font-size:10px}.inline-button[aria-pressed=true]{background:#e5eff5;border-color:#7f9eaf}
+#catalogInfo a{display:inline-block;margin:5px 0;color:#315d78}.chain-app #legend .series-entry{max-width:none;min-width:95px}
+.chain-capacity{font-size:11px;padding:8px 10px;background:#f3f7f5;border-block:1px solid #dae3dd;color:#395c4a;line-height:1.5}
+#metrics{width:100%;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}#metrics th:not(:first-child),#metrics td:not(:first-child){text-align:right}#metrics td{padding:6px 10px}#metrics button{padding:0;border:0;min-height:20px;background:none;text-decoration:underline dotted;text-underline-offset:3px;font-size:11px}#metrics button:hover{color:#315d78}
+.badge{padding:2px 6px;font-size:10px;font-weight:500;border-radius:2px;white-space:nowrap}.badge.pass{color:#346b53;background:#e8f1eb}.badge.fail{color:#986343;background:#f7eee7}.badge.unrated{color:#6c6c6c;background:#eee}
+#checksList{padding:4px 10px}.check{display:grid;grid-template-columns:13px 1fr;gap:3px 5px;padding:5px 0;border-bottom:1px solid #eee;font-size:11px}.check small{grid-column:2;font-size:10px;color:#777}.check.pass>span:first-child{color:#47856b}.check.fail>span:first-child{color:#b06c48}.check.unknown>span:first-child{color:#777}#checkCount{font-size:10px;color:#777;font-weight:400;margin-left:6px}
+.chain-app #plotHint{font-size:10px;color:#777}.scan-chains{display:grid;gap:8px;padding:7px 10px 12px}.scan-chains label{font-size:11px;display:flex;gap:5px;align-items:center}
+.chain-app .scan-controls .field{grid-template-columns:minmax(0,1fr) 70px 25px}.chain-app #scanTable{font-size:11px}.chain-app #scanTable td{padding:7px 9px}.chain-app #moreRows{margin:10px}.chain-app #scanSummary{margin:10px;font-size:12px;color:#333}
+@media(min-width:1150px) and (min-aspect-ratio:4/3){.chain-workspace{display:grid;grid-template-columns:minmax(330px,1fr) minmax(390px,1fr);grid-template-rows:minmax(0,1fr) auto;overflow:hidden}.chain-mechanism{height:auto;min-height:0;overflow:hidden}.chain-mechanism #drawing{min-height:0}.chain-analysis{overflow:auto;min-height:0;border-left:1px solid #bbb}.chain-workspace>footer{grid-column:1/-1}.chain-app #chart{height:clamp(220px,31dvh,350px)}}
+@media(max-width:1150px){.chain-app{--sidebar-width:245px}.chain-app header .version{display:none}}
+@media(max-width:760px){.chain-app #scanView{display:flex;flex-direction:column;overflow:auto}.chain-app .scan-controls{flex:none;overflow:visible;border-bottom:1px solid #aaa}.chain-app .scan-controls .fields{display:grid;grid-template-columns:1fr 1fr;gap:3px 16px}.chain-app .scan-chains{grid-template-columns:1fr 1fr}.chain-app .scan-results{flex:none;overflow:visible}.chain-app #properties .field label{font-size:11px}.chain-mechanism{height:470px}.chain-app .geometry-summary{gap:4px 12px}.chain-app #plotHint{max-width:180px}}
+@media(max-width:450px){.chain-app .scan-controls .fields{display:block}.chain-app #cursorMeta{font-size:9px}.chain-app #legend .series-entry{min-width:75px}.chain-app header strong{font-size:11px}}
+.chain-workspace.stale .chain-mechanism,.chain-workspace.stale .chain-analysis{opacity:.48;pointer-events:none}
+.chain-analysis>.table-wrap,.chain-analysis>details,.chain-analysis>.panel-title,.chain-analysis>.plot-heading,.chain-analysis>.plot-help,.chain-analysis>.chain-capacity{flex:none}
+.chain-specs{font-size:10px;line-height:1.6;color:#536571;margin-top:7px;font-variant-numeric:tabular-nums}.preset-row #chainData{font-size:11px;margin-top:6px;width:100%}
+#chainDataDialog{max-width:1000px;width:90vw;border:1px solid #a5b2ba;border-radius:4px;padding:16px;color:#33424a;background:#fff}#chainDataDialog::backdrop{background:#26364066}#chainDataDialog p{font-size:12px;line-height:1.6}.dialog-heading{display:flex;justify-content:space-between;align-items:center}.dialog-heading button{font-size:12px}#chainDataTable{width:100%;font-size:12px}#chainDataTable th,#chainDataTable td{padding:10px;text-align:right;white-space:nowrap}#chainDataTable th:first-child,#chainDataTable td:first-child{text-align:left}#chainDataTable tr.selected{background:#eaf2f7}#chainDataTable a{color:#386b8c}
+
+.chain-app .field.pitch-field{grid-template-columns:minmax(0,1fr) 62px 64px}
+.pitch-readout{display:flex;flex-direction:column;align-items:flex-end;line-height:1.15;font-variant-numeric:tabular-nums;color:#486b80;white-space:nowrap}
+.pitch-readout>span{font-size:11px;font-weight:600}.pitch-readout>small{font-size:8px;color:#78858d;margin-top:2px}.pitch-readout.inactive{opacity:.5}

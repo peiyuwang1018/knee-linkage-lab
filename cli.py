@@ -12,6 +12,7 @@ def main():
     p=argparse.ArgumentParser();p.add_argument("mode",choices=["cycle","scan"])
     p.add_argument("--config",type=Path);p.add_argument("--out",type=Path,required=True)
     a=p.parse_args();config=json.loads(a.config.read_text()) if a.config else Config().to_dict()
+    config=config.get("config",config)  # UI snapshots also preserve display / capacity settings.
     result=cycle(config) if a.mode=="cycle" else scan(config)
     a.out.parent.mkdir(parents=True,exist_ok=True)
     a.out.with_suffix(".json").write_text(json.dumps(result,indent=2,allow_nan=False),encoding="utf-8")

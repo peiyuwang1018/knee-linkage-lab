@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chain · Knee Linkage Lab</title><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/chain.css"></head>
+<body class="lab-app chain-app">
+<header><strong>Knee Linkage Lab</strong><span class="version">0.9 · Chain & idlers</span><nav><a href="/">Linkage</a><button id="showParameters" aria-expanded="false" aria-controls="properties">Parameters</button><button id="modelTab" class="active">Chain</button><button id="scanTab">Scan</button><a href="/chain-guide.html" target="_blank">Guide ↗</a></nav><div class="toolbar"><button id="open">Open…</button><input id="file" type="file" accept=".json" hidden><button id="save">Save config</button><button id="csv">Export CSV</button><button id="svg">Export SVG</button></div></header>
+<div id="notice" role="alert" hidden></div>
+<main id="modelView">
+<button id="parameterBackdrop" aria-label="Close parameters" hidden></button>
+<aside id="properties"><div class="panel-title">Chain parameters <button id="reset">Reset</button></div>
+<div class="preset-row"><select id="chainType" aria-label="Chain type"></select><div id="selectedChainSpecs" class="chain-specs"></div><button id="chainData">Chain data ↗</button><button id="importTask">Use current linkage task</button></div>
+<details open><summary>Sprockets & chain length</summary><div id="geometryFields" class="fields"></div><p id="teethHint" class="hint"></p><div class="fit-row"><button id="fitLinks">Fit even links</button><output id="fitHint"></output></div><p class="hint">One link = one pitch. Even counts only; no offset links.</p></details>
+<details open><summary>Idler layout</summary><div id="idlerFields" class="fields"></div><p id="idlerHint" class="hint"></p></details>
+<details open><summary>Design limits</summary><div id="limitFields" class="fields"></div><div class="quick-ratios"><span>Ratio max</span><button data-ratio="1.5">1.5</button><button data-ratio="1.75">1.75</button><button data-ratio="2">2</button></div><p class="hint">Input limit applies to estimated tooth-tip Ø, not pitch Ø. Width is chain only.</p></details>
+<details open><summary>Motion & load</summary><div id="taskFields" class="fields"></div><button id="mirror" class="inline-button" aria-pressed="false">Mirror about 0°</button><p id="loadHint" class="hint"></p></details>
+<details><summary>Module & load assumptions</summary><div id="motorFields" class="fields"></div><p class="hint">Module output values, after its internal gearbox. Losses are lumped at the module; chain forces are ideal.</p></details>
+<details><summary>Chain rating & custom data</summary><div id="ratingFields" class="fields"></div><div id="customFields" class="fields" hidden></div><p class="hint">Blank override = catalog. Unknown allowable load stays unrated. Breaking load is never used as allowable load.</p></details>
+<details><summary>Catalog source</summary><div id="catalogInfo" class="hint"></div></details>
+</aside>
+<section class="chain-workspace">
+<section class="chain-mechanism">
+<div class="canvas-heading"><div id="colorSwitch" class="mode-switch" role="group" aria-label="Color mode"><button data-mode="color" aria-pressed="true">Color</button><button data-mode="mono" aria-pressed="false">Mono</button></div><label><input id="dimensions" type="checkbox" checked>Dimensions</label><label><input id="linksVisible" type="checkbox" checked>Links</label><label><input id="forcesVisible" type="checkbox" checked>Forces</label></div>
+<div id="geometrySummary" class="geometry-summary"></div>
+<div id="drawing"><svg id="chainDrawing" role="img" aria-label="Chain-driven knee with two chain spans"></svg></div>
+<div class="mechanism-note"><span id="routeCaption">Mean pitch path · fixed idlers · A / B retain their identities</span></div>
+<div class="transport"><button id="play" aria-label="Play cycle">▶</button><input id="frame" type="range" value="0" min="0" max="240" aria-label="Cycle frame"><output id="time">0.00 s</output><select id="playSpeed" aria-label="Playback speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div>
+</section>
+<section class="chain-analysis">
+<div class="plot-heading"><select id="plotType" aria-label="Plot variable"><option value="tension">Chain tension · N</option><option value="torque">Module / knee torque · N·m</option><option value="reaction">Support resultants · N</option><option value="speed">Module speed · rpm</option></select><output id="cursorMeta"></output><div class="plot-options"><div class="mode-switch" id="cycleSwitch" role="group" aria-label="Cycle display"><button data-mode="oneway" aria-pressed="true">One-way</button><button data-mode="roundtrip" aria-pressed="false">Round trip</button></div><span id="plotHint"></span></div><div id="legend"></div></div>
+<svg id="chart" role="img" tabindex="0" aria-label="Chain cycle analysis. Use left and right arrows to inspect."></svg>
+<div class="plot-help">Click or drag to inspect · ← → step · dashed return curve when different</div>
+<div id="capacity" class="chain-capacity"></div>
+<div class="panel-title">Current frame / cycle peaks <span id="screenState" class="badge"></span></div>
+<div class="table-wrap"><table id="metrics"><thead><tr><th>Quantity</th><th>Now</th><th>Cycle peak |·|</th></tr></thead><tbody></tbody></table></div>
+<details id="checks" open><summary>Screening checks <span id="checkCount"></span></summary><div id="checksList"></div></details>
+<details><summary>Model boundaries</summary><div id="warnings" class="hint"></div></details>
+</section><footer id="status">Loading chain model…</footer>
+</section></main>
+<main id="scanView" hidden><aside class="scan-controls"><div class="panel-title">Discrete design search</div><p class="hint">Fixed task and center distance. Enumerate integer teeth and even chain pitches.</p><div id="scanChains" class="scan-chains"></div><div id="scanFields" class="fields"></div><p class="hint">Other limits follow the Chain panel, including width, idler layout, travel and clearance.</p><button id="runScan" class="primary">Run scan</button><button id="scanExport" disabled>Export results</button><p id="scanStatus" class="hint"></p></aside><section class="scan-results"><div class="panel-title">Candidates <label><input id="passesOnly" type="checkbox">Screen passes only</label></div><div id="scanSummary" class="hint">Choose ranges and run a scan.</div><p class="hint">Pareto objectives: smaller output tip Ø, narrower chain and lower peak module torque. Only fully rated screen passes are ranked. Equal designs with different link counts can share the front.</p><div class="table-wrap"><table id="scanTable"><thead><tr><th>Chain</th><th>z₁ / z₂</th><th>Ratio</th><th>Links</th><th>Input Ø</th><th>Output Ø</th><th>Width</th><th>Idler travel</th><th>Peak T</th><th>Module τ</th><th>Result</th><th></th></tr></thead><tbody></tbody></table></div><button id="moreRows" hidden>Show more</button></section></main>
+<dialog id="chainDataDialog"><div class="dialog-heading"><strong>Chain dimensions & ratings</strong><button id="closeChainData" aria-label="Close chain data">Close</button></div><p>Dimensions in mm. b₁ is the clear width between inner plates; sprocket tooth width must be smaller with supplier-specified clearance. Pin width is the overall axial envelope.</p><div class="table-wrap"><table id="chainDataTable"><thead><tr><th>Chain</th><th>Pitch p</th><th>Roller / bush d₁</th><th>Inner spacing b₁</th><th>Plate height</th><th>Pin width</th><th>Allowable N</th><th>Source</th></tr></thead><tbody></tbody></table></div><p>25RB and 35RB are bush chains (no separate roller). An unknown working-load rating is not replaced by breaking strength. Custom geometry is user-supplied.</p></dialog>
+<script src="/analysis.js"></script><script src="/chain.js"></script></body></html>

@@ -39,6 +39,9 @@ details{border-bottom:1px solid #ccc}summary{cursor:pointer;font-weight:600;padd
 .angle-track input:focus-visible::-webkit-slider-thumb{outline:2px solid #547f9c;outline-offset:2px}
 .angle-track input:focus-visible::-moz-range-thumb{outline:2px solid #547f9c;outline-offset:2px}
 .angle-scale{display:flex;justify-content:space-between;padding:0 1px;font-size:9px;color:#777}
+.parameter-slider{padding:0 1px 5px}.parameter-slider input{display:block;width:100%;height:15px;margin:2px 0;accent-color:#547f9c;cursor:ew-resize}.parameter-slider input:disabled{cursor:default;opacity:.45}
+.mirror-bar{display:flex;justify-content:flex-end;margin-top:5px}.mirror-bar button{font-size:10px;min-height:23px;padding:2px 7px}
+#mirrorAngles[aria-pressed="true"]{color:#315d78;background:#dceaf2;border-color:#7197ae}
 .hint{font-size:11px;color:#666;line-height:1.45;margin:6px 10px 9px}#geometryHint{font-size:10px}
 .workspace{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:auto;background:white;overscroll-behavior:contain}
 .mechanism-pane{display:flex;flex-direction:column;flex:none;min-width:0;height:clamp(350px,54dvh,620px);background:white}
@@ -74,6 +77,20 @@ details{border-bottom:1px solid #ccc}summary{cursor:pointer;font-weight:600;padd
 #legend .series-value{grid-column:1/-1;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
 #chart{display:block;flex:none;width:100%;height:clamp(210px,30dvh,350px);min-height:180px;background:#fff;cursor:crosshair;touch-action:none}
 .plot-help{flex:none;padding:0 10px 7px;color:#777;font-size:10px}
+.plot-options{grid-column:1/-1;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.plot-options .mode-switch button{position:relative;border:0;background:transparent;box-shadow:none;padding:2px 8px;min-height:23px;font-size:10px;color:#626970}
+.plot-options .mode-switch button[aria-checked="true"]{color:#253d4b;font-weight:600}
+#cycleModeHint{font-size:10px;color:#777}
+.motor-panel{flex:none;background:#f8fbf9;border-top:1px solid #dce5df;border-bottom:1px solid #dce5df;padding:7px 10px 6px}
+.motor-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;font-size:10px}
+.motor-fields label{display:flex;flex-direction:column;gap:3px;color:#555}
+.motor-fields label>span{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.motor-fields input{width:100%;min-width:0;max-width:100px;border:1px solid #bfcac3;background:white;border-radius:2px;height:25px;padding:3px 5px;font-size:12px;color:#222;font-variant-numeric:tabular-nums}
+.motor-fields input:invalid{border-color:#a86c4b;background:#fff7f1}
+.capacity-summary{display:flex;align-items:baseline;justify-content:space-between;gap:4px 10px;flex-wrap:wrap;margin-top:8px;font-variant-numeric:tabular-nums;font-size:11px}
+.capacity-summary strong{color:#34745b;font-weight:600}.capacity-summary span{color:#53645a;font-size:10px}
+.coverage-track{height:4px;background:#dfe7e2;border-radius:2px;overflow:hidden;margin-top:5px}.coverage-track span{display:block;width:0;height:100%;background:#6fa58b}
+#coverageDetail,.capacity-note{font-size:10px;line-height:1.4;margin:5px 0 0;color:#666}
 .force-ranges{flex:none;border-top:1px solid #cdd4d8;background:#fafbfc;padding:6px 10px}
 .range-heading{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:5px;font-size:11px}
 .range-heading strong{font-weight:600}.range-heading span{font-size:10px;color:#666}

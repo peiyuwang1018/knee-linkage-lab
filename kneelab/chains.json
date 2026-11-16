@@ -1,0 +1,62 @@
+{
+  "reviewed": "2026-11-15",
+  "notes": "Single-strand catalog references. Maximum allowable load is not breaking strength. Connector, lubrication, fatigue, wear and manufacturer application factors still require verification. Width is chain pin width, not assembly width.",
+  "items": [
+    {
+      "id": "tsubaki25",
+      "name": "Tsubaki 25RB · ANSI 25",
+      "type": "Bush chain",
+      "pitch_mm": 6.35,
+      "roller_mm": 3.302,
+      "plate_height_mm": 5.842,
+      "width_mm": 8.6106,
+      "allowable_n": 622.7510261,
+      "breaking_n": 3469.61286,
+      "source": "https://chains.ustsubaki.com/en-us/item/rs25-through-rs240-chains/rs25-roller-chains/25rb",
+      "note": "140 lbf maximum allowable; riveted pin width. Connector envelope must be checked.",
+      "inner_width_mm": 3.175
+    },
+    {
+      "id": "iwis05b",
+      "name": "iwis 05B-1 · G52",
+      "type": "Roller chain",
+      "pitch_mm": 8,
+      "roller_mm": 5,
+      "plate_height_mm": 7.1,
+      "width_mm": 9.2,
+      "allowable_n": null,
+      "breaking_n": 4400,
+      "source": "https://www.iwis.com/en-en/print-product/4735",
+      "note": "9.2 mm connecting-link width. Catalog lists breaking strength only here; enter a manufacturer-supported allowable load to assess capacity.",
+      "inner_width_mm": 3.16
+    },
+    {
+      "id": "tsubaki35",
+      "name": "Tsubaki 35RB · ANSI 35",
+      "type": "Bush chain",
+      "pitch_mm": 9.525,
+      "roller_mm": 5.08,
+      "plate_height_mm": 8.9916,
+      "width_mm": 13.4874,
+      "allowable_n": 2135.1463753,
+      "breaking_n": 7828.870043,
+      "source": "https://chains.ustsubaki.com/en-us/item/rs25-through-rs240-chains/rs35-roller-chains/35rb",
+      "note": "480 lbf maximum allowable; 0.531 in connecting-pin width. Rollerless (bush) chain.",
+      "inner_width_mm": 4.7752
+    },
+    {
+      "id": "tsubaki40",
+      "name": "Tsubaki 40RB · ANSI 40",
+      "type": "Roller chain",
+      "pitch_mm": 12.7,
+      "roller_mm": 7.9248,
+      "plate_height_mm": 11.9888,
+      "width_mm": 18.2118,
+      "allowable_n": 3603.0595083,
+      "breaking_n": 13900.692547,
+      "source": "https://chains.ustsubaki.com/en-us/item/rs25-through-rs240-chains/rs40-roller-chains/40rb",
+      "note": "810 lbf maximum allowable; maximum of listed pin widths.",
+      "inner_width_mm": 7.9248
+    }
+  ]
+}
