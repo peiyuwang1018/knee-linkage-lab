@@ -81,7 +81,19 @@
   });
   return best;
  }
- const api={displayTime,torqueCoverage,curveBranches,nearestFrame};
+ function chainLoadCheck(rows,allowable,factor,frame=0){
+  const tension=r=>r?.valid&&finite(r.tension_a_n)&&finite(r.tension_b_n)?Math.max(r.tension_a_n,r.tension_b_n):null;
+  const loads=rows.map(tension),valid=loads.filter(finite),current=loads[frame]??null;
+  const peak=valid.length?Math.max(...valid):null,complete=rows.length>0&&valid.length===rows.length;
+  const limit=finite(allowable)&&allowable>0&&finite(factor)&&factor>=1?allowable/factor:null;
+  const utilization=peak!=null&&limit!=null?100*peak/limit:null;
+  const state=peak==null?'unavailable':limit==null?'unrated':utilization>100+EPS?'fail':!complete?'incomplete':'pass';
+  return {state,current,peak,complete,limit,utilization,
+   currentUtilization:current!=null&&limit!=null?100*current/limit:null,
+   designPeak:peak!=null&&finite(factor)?peak*factor:null,
+   headroom:peak!=null&&limit!=null?limit-peak:null};
+ }
+ const api={displayTime,torqueCoverage,curveBranches,nearestFrame,chainLoadCheck};
  if(typeof module!=='undefined'&&module.exports)module.exports=api;
  else root.KneeAnalysis=api;
 })(typeof globalThis!=='undefined'?globalThis:this);

@@ -6,10 +6,7 @@ import mimetypes
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse
-from kneelab.model import Config,cycle
-from kneelab.scan import DEFAULT_GRID,DEFAULT_LIMITS,scan
-from kneelab.export import cycle_csv,scan_csv
-from kneelab import chain
+from kneelab.api import dispatch, GET_PATHS, POST_PATHS
 
 ROOT=Path(__file__).resolve().parent
 
@@ -35,13 +32,9 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if not self.trusted():return self.reply(403,{"error":"Local requests only."})
         path=urlparse(self.path).path
-        if path=="/api/health":return self.reply(200,{"app":"knee-linkage-lab","version":"0.9.0"})
-        if path=="/api/chain/defaults":
-            return self.reply(200,dict(config=chain.ChainConfig().to_dict(),catalog=chain.CATALOG))
-        if path=="/api/defaults":
-            return self.reply(200,dict(config=Config().to_dict(),grid=DEFAULT_GRID,limits=DEFAULT_LIMITS))
+        if path in GET_PATHS:return self.reply(200,dispatch(path))
         if path in ("/","/index.html"):file=ROOT/"static/index.html"
-        elif path in ("/app.js","/analysis.js","/style.css","/guide.html","/chain.html","/chain.js","/chain.css","/chain-guide.html"):file=ROOT/"static"/path[1:]
+        elif path in ("/runtime.js","/app.js","/analysis.js","/style.css","/guide.html","/chain.html","/chain.js","/chain.css","/chain-guide.html"):file=ROOT/"static"/path[1:]
         elif path in ("/model.md", "/findings.md", "/readme.md"):
             names = {"/model.md": "docs/Model.md", "/findings.md": "docs/Initial-findings.en.md",
                      "/readme.md": "README.md"}
@@ -58,18 +51,11 @@ class Handler(BaseHTTPRequestHandler):
             data=json.loads(self.rfile.read(size))
             if not isinstance(data,dict):raise ValueError("Request body must be an object.")
             path=urlparse(self.path).path
-            if path in ("/api/chain/cycle","/api/chain/cycle.csv"):
-                result=chain.evaluate(data.get("config",{}))
-                if path.endswith(".csv"):return self.reply(200,chain.cycle_csv(result),"text/csv; charset=utf-8","chain-cycle.csv")
-            elif path=="/api/chain/scan":
-                result=chain.scan(data.get("config",{}),data.get("chain_ids"))
-            elif path in ("/api/cycle","/api/cycle.csv"):
-                result=cycle(data.get("config",{}))
-                if path.endswith(".csv"):return self.reply(200,cycle_csv(result),"text/csv; charset=utf-8","cycle.csv")
-            elif path in ("/api/scan","/api/scan.csv"):
-                result=scan(data.get("config",{}),data.get("grid"),data.get("limits"))
-                if path.endswith(".csv"):return self.reply(200,scan_csv(result),"text/csv; charset=utf-8","scan.csv")
-            else:return self.reply(404,{"error":"Not found."})
+            if path not in POST_PATHS:return self.reply(404,{"error":"Not found."})
+            result=dispatch(path,data)
+            if path.endswith(".csv"):
+                filename="chain-cycle.csv" if path=="/api/chain/cycle.csv" else path.rsplit("/",1)[-1]
+                return self.reply(200,result,"text/csv; charset=utf-8",filename)
             self.reply(200,result)
         except (ValueError,TypeError,KeyError,OverflowError) as e:
             self.reply(400,{"error":str(e)})

@@ -16,6 +16,15 @@
 .inline-button{margin:4px 10px;font-size:10px}.inline-button[aria-pressed=true]{background:#e5eff5;border-color:#7f9eaf}
 #catalogInfo a{display:inline-block;margin:5px 0;color:#315d78}.chain-app #legend .series-entry{max-width:none;min-width:95px}
 .chain-capacity{font-size:11px;padding:8px 10px;background:#f3f7f5;border-block:1px solid #dae3dd;color:#395c4a;line-height:1.5}
+.chain-load-check{flex:none;padding:8px 10px;border-block:1px solid #d8e1dc;background:#f5f8f6;font-size:10px;color:#34483d;font-variant-numeric:tabular-nums}
+.load-check-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px;font-size:11px}
+.load-check-values{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 12px;margin:0}
+.load-check-values>div{min-width:0}.load-check-values dt{font-size:9px;color:#607168}.load-check-values dd{margin:2px 0 0;font-size:14px;font-weight:600}
+.chain-load-check p{margin:6px 0 0;line-height:1.45;overflow-wrap:anywhere}.chain-load-check a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+.chain-load-check[data-state=fail]{background:#fff2ef;border-color:#dcb6ac;color:#973e2f}.chain-load-check[data-state=fail] dt{color:#8b6158}
+.chain-load-check[data-state=unrated],.chain-load-check[data-state=unavailable],.chain-load-check[data-state=incomplete]{background:#f5f4ef;border-color:#dcd8cb;color:#69614b}
+.badge.overload{color:#973e2f;background:#f8ddd7}.badge.incomplete{color:#7c6537;background:#eee7d7}
+@media(min-width:1600px){.load-check-values{grid-template-columns:repeat(4,minmax(0,1fr))}}
 #metrics{width:100%;border-collapse:collapse;font-size:11px;font-variant-numeric:tabular-nums}#metrics th:not(:first-child),#metrics td:not(:first-child){text-align:right}#metrics td{padding:6px 10px}#metrics button{padding:0;border:0;min-height:20px;background:none;text-decoration:underline dotted;text-underline-offset:3px;font-size:11px}#metrics button:hover{color:#315d78}
 .badge{padding:2px 6px;font-size:10px;font-weight:500;border-radius:2px;white-space:nowrap}.badge.pass{color:#346b53;background:#e8f1eb}.badge.fail{color:#986343;background:#f7eee7}.badge.unrated{color:#6c6c6c;background:#eee}
 #checksList{padding:4px 10px}.check{display:grid;grid-template-columns:13px 1fr;gap:3px 5px;padding:5px 0;border-bottom:1px solid #eee;font-size:11px}.check small{grid-column:2;font-size:10px;color:#777}.check.pass>span:first-child{color:#47856b}.check.fail>span:first-child{color:#b06c48}.check.unknown>span:first-child{color:#777}#checkCount{font-size:10px;color:#777;font-weight:400;margin-left:6px}

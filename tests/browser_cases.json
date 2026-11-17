@@ -1,0 +1,17 @@
+[
+  {"name":"linkage-defaults","path":"/api/defaults"},
+  {"name":"chain-defaults","path":"/api/chain/defaults"},
+  {"name":"two-rods","path":"/api/cycle","body":{"config":{}}},
+  {"name":"unequal-stiffness","path":"/api/cycle","body":{"config":{"k2_ratio":0.4,"mass_kg":70}}},
+  {"name":"four-bar","path":"/api/cycle","body":{"config":{"n":1,"input_radius_mm":50,"output_radius_mm":60,"rod_mm":310}}},
+  {"name":"hip-acceleration","path":"/api/cycle","body":{"config":{"load_mode":"trajectory","half_cycle_s":1.5}}},
+  {"name":"contact-loss","path":"/api/cycle","body":{"config":{"load_mode":"trajectory","half_cycle_s":0.15}}},
+  {"name":"linkage-scan","path":"/api/scan","body":{"config":{},"grid":{"n":[1,2],"input_radius_mm":[40,60],"spacing_deg":[90]}}},
+  {"name":"chain-dual-idlers","path":"/api/chain/cycle","body":{"config":{}}},
+  {"name":"chain-reversal","path":"/api/chain/cycle","body":{"config":{"q_start_deg":-120,"q_end_deg":120}}},
+  {"name":"chain-prescribed-torque","path":"/api/chain/cycle","body":{"config":{"load_mode":"torque","prescribed_torque_nm":-112}}},
+  {"name":"chain-single-idler","path":"/api/chain/cycle","body":{"config":{"idler_mode":"single","idler_teeth":13}}},
+  {"name":"chain-invalid-route","path":"/api/chain/cycle","body":{"config":{"chain_id":"iwis05b","input_teeth":25,"output_teeth":32,"center_mm":220,"links":114,"idler_mode":"none"}}},
+  {"name":"chain-unrated","path":"/api/chain/cycle","body":{"config":{"chain_id":"iwis05b","links":104}}},
+  {"name":"chain-scan","path":"/api/chain/scan","body":{"config":{"input_teeth_min":19,"input_teeth_max":19,"links_min":92,"links_max":94},"chain_ids":["tsubaki35"]}}
+]

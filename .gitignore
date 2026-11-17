@@ -48,3 +48,12 @@ CLAUDE.md
 .codex/
 .claude/
 output/
+
+!/build_site.py
+!/.github/
+!/static/runtime.js
+!/static/solver-worker.mjs
+!/tests/test_web.py
+!/tests/browser_parity.mjs
+!/tests/browser_cases.json
+!/docs/Deployment.md

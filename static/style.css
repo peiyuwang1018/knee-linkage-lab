@@ -152,3 +152,5 @@ svg .dim{stroke:#888;stroke-width:.8;fill:none}svg .rod{stroke:#111;stroke-width
 .guide table{border-collapse:collapse;width:100%;font-size:12px}.guide th,.guide td{white-space:normal}.guide code,.guide pre{font-family:ui-monospace,monospace;font-size:12px}
 .guide pre{padding:12px;background:#f4f4f4;overflow:auto}.guide .equation{font-family:Georgia,serif;font-size:17px;border-left:2px solid #777;padding:8px 15px;background:#fafafa}
 .guide img{max-width:100%;max-height:400px;object-fit:contain}.guide p{margin:12px 0}.guide li{margin:5px 0}
+
+.runtime-status{position:fixed;z-index:1000;left:50%;bottom:22px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;max-width:calc(100vw - 24px);width:max-content;padding:10px 14px;background:#fff;border:1px solid #aab5b7;border-radius:6px;box-shadow:0 3px 16px #0002;font-size:13px}.runtime-status span{max-width:460px}.runtime-status button{flex:none}

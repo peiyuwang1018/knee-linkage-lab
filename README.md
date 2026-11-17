@@ -1,10 +1,18 @@
 # Knee Linkage Lab
 
-A local, interactive Python workbench for exploring planar knee transmissions with parallel rod groups or chain drives. Adjust geometry, phase spacing, motion range and loading; inspect signed rod forces, force arrows, input torque and support reactions throughout a cycle.
+An interactive Python workbench for exploring planar knee transmissions with parallel rod groups or chain drives. Adjust geometry, phase spacing, motion range and loading; inspect signed rod forces, force arrows, input torque and support reactions throughout a cycle.
 
 Prepared by Peiyu Wang. UI / chain module v0.9; rod solver v0.4.0.
 
 ![Knee Linkage Lab: geometry, force overlays and cycle plots](docs/workbench.png)
+
+## Open in your browser
+
+**[Launch Knee Linkage Lab](https://peiyuwang1018.github.io/knee-linkage-lab/)** · **[Chain workbench](https://peiyuwang1018.github.io/knee-linkage-lab/chain.html)**
+
+No installation is needed. The same Python geometry and force solvers run on your device through Pyodide in a Web Worker. The first visit downloads Python from the Pyodide CDN, so it may take a moment. Parameters and results are not sent to a calculation server; saved settings stay in this browser. Use Save config to move them between the website and the local app.
+
+Long scans can be cancelled without freezing the page. For large sweeps or fully offline work, use the local Python app below. [Deployment and browser verification](docs/Deployment.md).
 
 ## Chain module (v0.9)
 
@@ -65,7 +73,7 @@ The input and output discs share multiple compatible parallelogram paths when n 
 
 Link masses, full robot balance, 3D packaging, collision, buckling, joint clearances, bearing-pair loads and motor thermal limits are not modeled. `Knee support` is a resultant axis reaction in newtons; it is not knee torque or an individual bearing's load. The Linkage Pareto label minimizes only peak absolute rod force and crank radius, within the sampled feasible grid.
 
-GitHub can host this source repository for download. The current application is not a standalone GitHub Pages site: its calculations use the local Python server. A browser-only runtime or a separately hosted backend would be a distinct deployment step.
+GitHub Pages hosts the browser app. `build_site.py` packages the existing `kneelab` Python sources; `kneelab/api.py` is shared by the browser worker and the local HTTP server. The mechanics are not reimplemented in JavaScript.
 
 ## UI analysis checks
 

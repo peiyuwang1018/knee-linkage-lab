@@ -1,6 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {displayTime, torqueCoverage, curveBranches, nearestFrame} = require('../static/analysis.js');
+const {displayTime, torqueCoverage, curveBranches, nearestFrame, chainLoadCheck} = require('../static/analysis.js');
 const row = (t,q,torque,valid=true) => ({t,q_deg:q,tau_in:torque,valid});
 const near = (a,b) => assert.ok(Math.abs(a-b)<1e-8, `${a} != ${b}`);
 
@@ -61,4 +61,33 @@ test('inspection stays on the current pass and supports equal timestamps at endp
  assert.equal(nearestFrame(rows,.5,1,'oneway',true),3);
  assert.equal(nearestFrame(rows,0,1,'oneway',true),4);
  assert.equal(nearestFrame(rows,1.5,1,'roundtrip',false),3);
+});
+
+const chainRow=(a,b,valid=true)=>({valid,tension_a_n:a,tension_b_n:b});
+test('chain load uses the highest individual span over both passes and applies the factor once', () => {
+ const c=chainLoadCheck([chainRow(1686,50),chainRow(50,2000)],2135,1.25,0);
+ assert.equal(c.state,'fail');assert.equal(c.current,1686);assert.equal(c.peak,2000);
+ near(c.limit,1708);near(c.designPeak,2500);near(c.utilization,2500/2135*100);
+ near(c.currentUtilization,1686/1708*100);near(c.headroom,-292);
+ assert.equal(chainLoadCheck([chainRow(1708,50)],2135,1.25).state,'pass');
+ assert.equal(chainLoadCheck([chainRow(1708.1,50)],2135,1.25).state,'fail');
+});
+test('missing chain working-load ratings stay unrated even with valid force results', () => {
+ const c=chainLoadCheck([chainRow(2000,50)],null,1.25);
+ assert.equal(c.state,'unrated');assert.equal(c.peak,2000);
+ assert.equal(c.limit,null);assert.equal(c.utilization,null);assert.equal(c.headroom,null);
+});
+test('invalid chain routes cannot report a zero load or a pass', () => {
+ const c=chainLoadCheck([chainRow(null,null,false)],2135,1.25);
+ assert.equal(c.state,'unavailable');assert.equal(c.peak,null);assert.equal(c.current,null);
+ assert.equal(c.utilization,null);assert.equal(c.complete,false);
+ assert.equal(chainLoadCheck([],2135,1.25).state,'unavailable');
+});
+test('partial chain cycles retain known overloads but never claim a full-cycle pass', () => {
+ const rows=[chainRow(1000,50),chainRow(null,null,false)];
+ const c=chainLoadCheck(rows,2135,1.25,1);
+ assert.equal(c.state,'incomplete');assert.equal(c.current,null);assert.equal(c.peak,1000);
+ rows[0]=chainRow(2000,50);assert.equal(chainLoadCheck(rows,2135,1.25).state,'fail');
+ const zero=chainLoadCheck([chainRow(0,0)],2135,1.25);
+ assert.equal(zero.state,'pass');assert.equal(zero.utilization,0);
 });
